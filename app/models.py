@@ -76,6 +76,40 @@ class Plan(PlanBase, table=True):
 
 
 """
+Products
+------------------------------
+"""
+
+
+class ProductBase(SQLModel):
+    name: str = Field(default=None)
+    price: int = Field(default=None)
+    description: str | None = Field(default=None)
+
+
+class ProductCreate(ProductBase):
+    pass
+
+
+class ProductUpdate(ProductBase):
+    pass
+
+
+class Product(ProductBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    created_at: Optional[datetime] = Field(
+        default=None,
+        sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), nullable=True
+        ),
+    )
+    updated_at: Optional[datetime] = Field(
+        default=None,
+        sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
+    )
+
+
+"""
 CUSTOMER
 ------------------------------
 """
